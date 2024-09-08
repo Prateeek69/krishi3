@@ -1,24 +1,32 @@
 // App.tsx
 
-import 'react-native-gesture-handler';
-import React from 'react';
-import { StyleSheet, TouchableOpacity, Image, StatusBar } from 'react-native';
-import { NavigationContainer, DefaultTheme, DarkTheme, Theme } from '@react-navigation/native';
-import { createStackNavigator, StackNavigationOptions } from '@react-navigation/stack';
-import { LinearGradient } from 'expo-linear-gradient';
+import "react-native-gesture-handler";
+import React from "react";
+import { StyleSheet, TouchableOpacity, Image, StatusBar } from "react-native";
+import {
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+  Theme,
+} from "@react-navigation/native";
+import {
+  createStackNavigator,
+  StackNavigationOptions,
+} from "@react-navigation/stack";
+import { LinearGradient } from "expo-linear-gradient";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 // Import your screens
-import Welcome from './src/screens/Welcome';
-import Home from './src/screens/Home';
-import Splash from './src/screens/Splash';
-import ProductDetail from './src/screens/ProductDetail';
-import FarmerProfile from './src/screens/FarmerProfile';
-import Cart from './src/screens/Cart';
-import Payment from './src/screens/Payment';
-import Contact from './src/screens/Contact';
-import Products from './src/screens/Products';
-import Profile from './src/screens/Profile';
+import Welcome from "./src/screens/Welcome";
+import Home from "./src/screens/Home";
+import Splash from "./src/screens/Splash";
+import ProductDetail from "./src/screens/ProductDetail";
+import FarmerProfile from "./src/screens/FarmerProfile";
+import Cart from "./src/screens/Cart";
+import Payment from "./src/screens/Payment";
+import Contact from "./src/screens/Contact";
+import Products from "./src/screens/Products";
+import Profile from "./src/screens/Profile";
 
 // Define the type for the stack navigator
 type RootStackParamList = {
@@ -42,30 +50,38 @@ export default function App() {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      background: '#ffffff',
+      background: "#ffffff",
     },
   };
 
   return (
     <NavigationContainer theme={MyTheme}>
-      <StatusBar backgroundColor="transparent" translucent barStyle="dark-content" />
+      <StatusBar
+        backgroundColor="transparent"
+        translucent
+        barStyle="dark-content"
+      />
 
       <Stack.Navigator
         screenOptions={{
+          headerStyle: {
+            height: 80, // This hides the header or you can set a custom height
+            },
           // Custom header with gradient background and logo
           headerBackground: () => (
             <LinearGradient
-              colors={['#4c669f', '#3b5998', '#192f6a']}
+              colors={["#4c669f", "#3b5998", "#192f6a"]}
               style={styles.headerGradient}
               start={[0, 0]}
               end={[1, 1]}
             />
           ),
-          headerTintColor: '#fff',
-          headerTitleAlign: 'center',
+          headerTintColor: "#fff",
+          headerTitleAlign: "center",
           headerTitleStyle: {
-            fontWeight: 'bold',
+            fontWeight: "bold",
             fontSize: 20,
+            
             // You can add a custom font here if desired
           },
         }}
@@ -78,13 +94,28 @@ export default function App() {
         <Stack.Screen
           name="Welcome"
           component={Welcome}
-          options={{ title: 'Welcome' }}
+          options={{ title: "Welcome" }}
         />
         <Stack.Screen
           name="Home"
           component={Home}
           options={({ navigation }) => ({
             title: "Kisaan Bazaar",
+            headerTitle: () => (
+              <Image
+                source={{ uri: "https://your-logo-url.com/logo.png" }} // Replace with your logo URL or require statement
+                style={styles.logo}
+                resizeMode="contain"
+              />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
+          options={({ navigation }) => ({
+            title: "My Profile",
+            /** Added the headerRight here to navigate to the Contact screen **/
             headerRight: () => (
               <TouchableOpacity onPress={() => navigation.navigate("Contact")}>
                 <MaterialIcons
@@ -95,16 +126,8 @@ export default function App() {
                 />
               </TouchableOpacity>
             ),
-            headerTitle: () => (
-              <Image
-                source={{ uri: 'https://your-logo-url.com/logo.png' }} // Replace with your logo URL or require statement
-                style={styles.logo}
-                resizeMode="contain"
-              />
-            ),
           })}
         />
-        <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Products" component={Products} />
         <Stack.Screen name="ProductDetail" component={ProductDetail} />
         <Stack.Screen name="Cart" component={Cart} />
